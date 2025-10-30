@@ -14,11 +14,25 @@ beePrior.py -> Classify events utilizing distance prior checking function.
 
 beeSingleAngle.py -> Classify events utilizing only last angle of event.
 
-cheatsheet.csv -> Manually corroborated event classification results
+month_data/cheatsheet.csv -> Manually corroborated event classification results
+
+month_data/Rules.ipynb -> Implementing all methods for event classification with priorities
 
 worker05.txt -> Data from BeeCam-AprilTag paper experiment.
 
+graphs folder -> Tracking bee movements from beeActivity.csv
+
+beecam-graphs folder -> Tracking bee movements from worker05.txt
+
+month_data/graphs -> tracking bee movements from month-long data
+
 month_data folder -> Same experiment with monthlong extracted data.
+
+bee_prior.csv, bee_angle.csv, bee_singleangle.csv -> Classified events for beeActivity.csv
+
+beecam_prior.csv, beecam_angle.csv -> Classified events for beeActivity.csv
+
+month_data/bee_prior.csv, bee_angle.csv, bee_singleangle.csv -> Classified events for month-long data
 
 ### USER-DEFINED VALUES
 

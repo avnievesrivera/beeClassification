@@ -14,52 +14,48 @@ import sys
 
 def beeCleanPrior(bee):
 
-    id = bee['track_tagid'].iloc[0]
-
     new_event = []
     datetime = []
+    ids = []
+    first_detection = 0
+    for i in range(len(break_indexes)):
+
+        ids.append(vdf['track_tagid'].iloc[break_indexes[i]])
+        datetime.append(vdf['track_endtime'].iloc[break_indexes[i]])
         
-    for i in range(len(bee)-1):
+        detections = vdf.iloc[first_detection:break_indexes[i]+1]
+    
+        coordinates = detections[['track_endy','track_starty']]
+        coordinates.reset_index(drop=True, inplace=True)
+        
+        final = coordinates['track_endy'].iloc[-1]
+        
+        for k in range(len(coordinates)):
+            prev = coordinates['track_starty'].iloc[len(coordinates)-k-1]
+            dif = final - prev
+            if abs(dif) >= t2:
+                if dif > 0:
+                    new_event.append('exiting')
+                elif dif < 0:
+                    new_event.append('entering')
+                else:
+                    new_event.append('unknown')
+                break
+            elif k == len(coordinates) - 1:
+                if dif > 0:
+                    new_event.append('exiting')
+                elif dif < 0:
+                    new_event.append('entering')
+                else:
+                    new_event.append('unknown')
+        first_detection = break_indexes[i]+1
+        
 
-            time = bee['track_endtime'].iloc[i]
-            next_t = bee['track_starttime'].iloc[i+1]
-
-            init = bee['track_starty'].iloc[i]
-
-            #if time passed is greater than the threshold,
-            #classify the last detection in an event
-            if (next_t - time).total_seconds() > t:
-                second = bee['track_endy'].iloc[i]
-                matched = False
-                counter = 1
-                #iterate backwards until the distance threshold
-                #is met or until they reach the first detection in
-                #the event
-                while not matched: 
-                    if abs(second-init) > t2:
-                        if second > init:
-                            new_event.append('exiting')
-                        else:
-                            new_event.append('entering')
-                        matched = True
-                    elif (time - bee['track_starttime'].iloc[i-counter]).total_seconds() < t:
-                        init = bee['track_starty'].iloc[i-counter]
-                        counter += 1
-                    else:
-                        if second > init:
-                            new_event.append('exiting')
-                        elif init > second:
-                            new_event.append('entering')
-                        else:
-                            new_event.append('unknown')
-                        matched = True
-                datetime.append(time)
-                
-                
+    datadict ={'tagID':ids,'datetime':datetime,'event':new_event}
+    return pd.DataFrame.from_dict(datadict)
             
-    tagID = [id] * len(new_event)
-    df = pd.DataFrame.from_dict({'tagID': tagID, 'datetime':datetime, 'event':new_event})
-    return df
+        
+ 
     
 
 #obtain parameters from prompt
@@ -76,19 +72,11 @@ vdf = pd.read_csv(csvname)
 vdf['track_endtime'] = vdf['track_endtime'].apply(lambda x: pd.to_datetime(x))
 vdf['track_starttime'] = vdf['track_starttime'].apply(lambda x: pd.to_datetime(x))
 vdf['track_tagid'] = vdf['track_tagid'].apply(lambda x: str(x))
-
+vdf = vdf.sort_values(by=['track_tagid','track_starttime']).reset_index()
+vdf['next_t'] = vdf['track_starttime'].shift(periods=-1)
+vdf['timedelta'] = (vdf['next_t'] - vdf['track_endtime']).apply(lambda x: x.total_seconds())
 #iterate over all bees in dataset and save to full dataframe
 
-bees = []
-
-beeIDs = vdf['track_tagid'].unique()
-for bee in beeIDs:
-
-    b = vdf[vdf['track_tagid'] == bee].copy().reset_index()
-    events = beeCleanPrior(b)
-    bees.append(events)
-    
-    
-new = pd.concat(bees, axis = 0) 
-new.to_csv(outputfile, index=False)
+prior = beeCleanPrior(vdf)
+prior.to_csv(outputfile, index=False)
 print(f"Saved to {outputfile}")

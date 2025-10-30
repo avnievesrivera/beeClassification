@@ -2,9 +2,9 @@
 
 ### FILES
 
-BeeClassify.ipynb -> Has all functions for user interactivity.
+BeeClassify.ipynb -> Has all functions for user interactivity. Functions are properly commented.
 
-BeeCam-AprilTag.ipynb -> Application of the prior detection on BeeCam-AprilTag data.
+BeeCam-AprilTag.ipynb -> Application of the prior detection on BeeCam-AprilTag data. Functions are fully commented.
 
 beeActivity.csv -> File of all detections to be classified.
 
@@ -41,6 +41,12 @@ t -> User-defined seconds threshold to divide and combine detections into events
 t2 -> Distance that must be covered to classify an event.
 
 angle -> Angle threshold (in degrees) for verifying the classification for an event.
+
+### GRAPH FORMAT
+
+x-axis -> index of events in order
+
+y-axis -> y position of bee at event index
 
 ### REQUIRED VALUES FOR INPUT CSV
 

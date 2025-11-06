@@ -1,0 +1,7 @@
+1_02_R_190807110000.cfr.mp4.tracks_tagged.csv
+1_02_R_190815155427.cfr.mp4.tracks_tagged.csv
+2_02_R_190807120000.cfr.mp4.tracks_tagged.csv
+2_02_R_190815160000.cfr.mp4.tracks_tagged.csv
+3_02_R_190807130000.cfr.mp4.tracks_tagged.csv
+3_02_R_190809060000.cfr.mp4.tracks_tagged.csv
+3_02_R_190815170000.cfr.mp4.tracks_tagged.csv

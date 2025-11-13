@@ -2,37 +2,27 @@
 
 ### FILES
 
-BeeClassify.ipynb -> Has all functions for user interactivity. Functions are properly commented.
+BeeClassify.ipynb -> Initial algorithms on which we worked with
 
-BeeCam-AprilTag.ipynb -> Application of the prior detection on BeeCam-AprilTag data. Functions are fully commented.
+beeActivity.csv -> File of all detections in original data
 
-beeActivity.csv -> File of all detections to be classified.
-
-beeAngle.py -> Classify events utilizing summed vector angle function.
-
-beePrior.py -> Classify events utilizing distance prior checking function.
-
-beeSingleAngle.py -> Classify events utilizing only last angle of event.
+month_data/BeeClassify.ipynb -> Converts multiple csv files subset into one csv file
 
 month_data/cheatsheet.csv -> Manually corroborated event classification results
 
-month_data/Rules.ipynb -> Implementing all methods for event classification with priorities
+month_data/cheatsheetroundabout.csv -> Manually corroborated u-turn events as single movement classification
 
-worker05.txt -> Data from BeeCam-AprilTag paper experiment.
+month_data/cheatsheetboth.csv -> Manually corroborated compound events
+
+month_data/Rules.ipynb -> Implementing all methods for event classification on subset of month data. Contains directional complementarity and accuracy checks
+
+month_data/Rules-Full.ipynb -> Implementing compound event for all data in dataset
 
 graphs folder -> Tracking bee movements from beeActivity.csv
 
-beecam-graphs folder -> Tracking bee movements from worker05.txt
-
-month_data/graphs -> tracking bee movements from month-long data
+month_data/graphs -> tracking bee movements from subset of month-long data
 
 month_data folder -> Same experiment with monthlong extracted data.
-
-bee_prior.csv, bee_angle.csv, bee_singleangle.csv -> Classified events for beeActivity.csv
-
-beecam_prior.csv, beecam_angle.csv -> Classified events for beeActivity.csv
-
-month_data/bee_prior.csv, bee_angle.csv, bee_singleangle.csv -> Classified events for month-long data
 
 ### USER-DEFINED VALUES
 
@@ -44,43 +34,10 @@ angle -> Angle threshold (in degrees) for verifying the classification for an ev
 
 ### GRAPH FORMAT
 
-x-axis -> index of events in order
+x-axis -> frames of event in order
 
 y-axis -> y position of bee at event index
 
-### REQUIRED VALUES FOR INPUT CSV
-
-beeAngle.py and beeSingleAngle.py require the following columns:
-
- - track_tagid
- - track_starty
- - track_endy
- - track_startx
- - track_endx
- - track_starttime
- - track_endtime
-
-beePrior.py requires the following columns:
-
- - track_tagid
- - track_starty
- - track_endy
- - track_starttime
- - track_endtime
-
-### HOW TO USE
-```
-python beePrior.py <t> <t2> <csvfilename> <outputfile-optional>
-```
-
-```
-python beeAngle.py <t> <angle> <csvfilename> <outputfile-optional>
-```
-
-```
-python beeSingleAngle.py <t> <angle> <csvfilename> <outputfile-optional>
-```
-
 ### CREDITS
 
-Summed vector angle function and worker05.txt was taken from BeeCam-AprilTag https://github.com/AERS-Lab/BeeCam-AprilTag
+Summed vector angle function was taken from BeeCam-AprilTag https://github.com/AERS-Lab/BeeCam-AprilTag
